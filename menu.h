@@ -15,6 +15,7 @@ public:
     static int iterarMenu(Mat imagen, Circulo mando1, Circulo mando2, int nFrame);
 
 private:
+    static void inicializarImagenes();
     static void dibujarMenu(Mat imagen);
     static void cargarSeleccion(Circulo mando);
     static void dibujarBarraCarga(Mat imagen);

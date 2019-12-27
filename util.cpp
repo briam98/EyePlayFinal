@@ -2,7 +2,7 @@
 
 const char* util::keys=
 {
-    "{help h | | show help message}{@camera_number| 0 | camera number}"
+    "{help h}"
 };
 
 //TODO QUITAR c
@@ -27,7 +27,7 @@ void util::help()
             "           Briam Daniel Solano Godoy\n"
             "           Jose Antonio Pina Gomez\n"
             "para la asignatura de Informatica Grafica\n"
-            "de 4º curso de Ingenieria Informatica en la Univesidad de Murcia\n";
+            "de 4 curso de Ingenieria Informatica en la Univesidad de Murcia\n";
     cout << util::hot_keys;
 }
 

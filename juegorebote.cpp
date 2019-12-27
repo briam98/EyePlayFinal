@@ -82,7 +82,9 @@ void juegoRebote::cargarSeleccion(Circulo mando, Rect boton) {
     float distancia = sqrt((mando.centro.x - px)*(mando.centro.x - px) + (mando.centro.y - py)*(mando.centro.y - py));
 
     if (distancia < mando.radio) {
-
+        // Cargamos la barra de carga si no esta completa
+        // en el caso de que este llena lo indicamos con la
+        // variable isCargado
         if (porcentajeCargado < 200) {
             porcentajeCargado += velocidad_carga;
         } else {
@@ -102,8 +104,10 @@ void juegoRebote::dibujarBarraCarga(Mat imagen) {
         int p2x_loading = px_loading + 200;
         int p2y_loading = py_loading + 30;
 
+        // Borde negro de la barra de carga
         rectangle(imagen, Point(px_loading, py_loading) , Point(p2x_loading, p2y_loading), Scalar(0, 0, 0), 1, LINE_8, 0);
 
+        // Rectangulo verde que indica el porcentaje de carga de la barra
         p2x_loading = px_loading + porcentajeCargado;
         rectangle(imagen, Point(px_loading + 1, py_loading + 1) , Point(p2x_loading - 1, p2y_loading - 1), Scalar(0, 255, 0), FILLED, LINE_8, 0);
 
@@ -116,16 +120,12 @@ void juegoRebote::calcularColisionesBordes(Mat imagen) {
     int altura_imagen = imagen.rows - 1;
 
     if (bola.centro.x + bola.radio >= ancho_imagen) {
-//        bola.velocidad.x *= -1;
-//        bola.centro.x = imagen.cols - bola.radio;
         estado_actual = CELEBRACION;
         gol_jugador1 = true;
         goles_jugador1++;
     }
 
     if (bola.centro.x - bola.radio <= 0) {
-//        bola.velocidad.x *= -1;
-//        bola.centro.x = bola.radio;
         estado_actual = CELEBRACION;
         gol_jugador2 = true;
         goles_jugador2++;
@@ -155,37 +155,24 @@ void juegoRebote::desplazarBola(Circulo mando , float distancia) {
 
 void juegoRebote::calcularNuevaVelocidad(Circulo mando) {
 
-    bool test1 = (mando.velocidad.x > 0) && (bola.velocidad.x > 0) && (mando.velocidad.y > 0) && (bola.velocidad.y > 0);
-    bool test2 = (mando.velocidad.x > 0) && (bola.velocidad.x > 0) && (mando.velocidad.y < 0) && (bola.velocidad.y < 0);
-    bool test3 = (mando.velocidad.x < 0) && (bola.velocidad.x < 0) && (mando.velocidad.y < 0) && (bola.velocidad.y < 0);
-    bool test4 = (mando.velocidad.x < 0) && (bola.velocidad.x < 0) && (mando.velocidad.y > 0) && (bola.velocidad.y > 0);
+    Point_<float> v_union(mando.centro.x - bola.centro.x, mando.centro.y - bola.centro.y);
+    float modulo_union = static_cast<float>(sqrt((v_union.x * v_union.x) + (v_union.y * v_union.y)));
+    Point_<float> v_union_unitario(v_union.x / modulo_union, v_union.y / modulo_union);
+    float escalar1 = bola.velocidad.x * v_union_unitario.x + bola.velocidad.y * v_union_unitario.y;
 
-    if (test1 && test2 && test3 && test4) {
-        moverBola();
+    Point_<float> v_x(escalar1 * v_union_unitario.x, escalar1 * v_union_unitario.y);
 
-    } else {
+    Point_<float> v_unitario_perpendicular(-v_union_unitario.y, v_union_unitario.x);
+    float escalar2 = bola.velocidad.x * v_unitario_perpendicular.x + bola.velocidad.y * v_unitario_perpendicular.y;
 
-        Point_<float> v_union(mando.centro.x - bola.centro.x, mando.centro.y - bola.centro.y);
-        float modulo_union = static_cast<float>(sqrt((v_union.x * v_union.x) + (v_union.y * v_union.y)));
-        Point_<float> v_union_unitario(v_union.x / modulo_union, v_union.y / modulo_union);
-        float escalar1 = bola.velocidad.x * v_union_unitario.x + bola.velocidad.y * v_union_unitario.y;
+    Point_<float> v_y(escalar2 * v_unitario_perpendicular.x, escalar2 * v_unitario_perpendicular.y);
 
-        Point_<float> v_x(escalar1 * v_union_unitario.x, escalar1 * v_union_unitario.y);
+    Point_<float> _v_x(-v_x.x, -v_x.y);
 
-        Point_<float> v_unitario_perpendicular(-v_union_unitario.y, v_union_unitario.x);
-        float escalar2 = bola.velocidad.x * v_unitario_perpendicular.x + bola.velocidad.y * v_unitario_perpendicular.y;
+    Point_<float> nueva_velocidad(_v_x.x + v_y.x, _v_x.y + v_y.y);
 
-        Point_<float> v_y(escalar2 * v_unitario_perpendicular.x, escalar2 * v_unitario_perpendicular.y);
-
-        Point_<float> _v_x(-v_x.x, -v_x.y);
-
-        Point_<float> nueva_velocidad(_v_x.x + v_y.x, _v_x.y + v_y.y);
-
-        bola.velocidad.x = ceil(nueva_velocidad.x);
-        bola.velocidad.y = ceil(nueva_velocidad.y);
-     }
-
-
+    bola.velocidad.x = ceil(nueva_velocidad.x);
+    bola.velocidad.y = ceil(nueva_velocidad.y);
 }
 
 void juegoRebote::calcularColisionesMando(Circulo mando) {
@@ -198,7 +185,6 @@ void juegoRebote::calcularColisionesMando(Circulo mando) {
             //Existe colision entre el mando y la bola
             desplazarBola(mando, distancia);
             calcularNuevaVelocidad(mando);
-//            moverBola();
         }
     }
 
@@ -255,8 +241,6 @@ void juegoRebote::mostrarMensajeGol(Mat imagen) {
         return;
     }
 
-//    putText(imagen, "GOOOOOOOOOL", Point(imagen.cols / 2 - 100, yMsgGol), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, FILLED);
-
     Rect selection(120, yMsgGol, 400, 240);
     Mat roi_destino(imagen, selection);
 
@@ -312,13 +296,13 @@ void juegoRebote::inicializar(Mat imagen) {
 
     nFrames = 0;
     tiempo = 3;
-
-
 }
 
 void juegoRebote::mostarCelebracion(Mat imagen) {
     mostrarMensajeGol(imagen);
 
+    // Su la imagen del gol llega al borde mostramos el contador del tiempo
+    // si el juego todavia no ha finalizado
     if (yMsgGol + 240 > imagen.rows - 1) {
 
         if (goles_jugador1 == 5) {
@@ -341,6 +325,7 @@ void juegoRebote::mostarCelebracion(Mat imagen) {
 
     nFrames++;
 
+    // Si el tiempo ha terminado reiniciamos valores
     if (tiempo < 0) {
         if (gol_jugador1) {
             bola.velocidad.x = 5;
@@ -386,6 +371,7 @@ void juegoRebote::dibujarBordes(Mat imagen) {
 
     double alpha = 0.2;
 
+    // Añadimos el canal alfa para que los bordes se vean transparentes
     addWeighted(overlay, alpha, imagen, 1 - alpha, 0, imagen);
 }
 
@@ -397,6 +383,8 @@ int juegoRebote::iterar(Mat imagen, Circulo mando1, Circulo mando2) {
         inicializarImagenes();
     }
 
+    // Mostramos el menu del juego con el boton de empezar
+    // y la descripcion
     if (estado_actual == MENU) {
         mostrarInfoJuego(imagen);
         cargarSeleccion(mando1, rect_empezar);
@@ -407,7 +395,7 @@ int juegoRebote::iterar(Mat imagen, Circulo mando1, Circulo mando2) {
         }
         dibujarBarraCarga(imagen);
     } else if (estado_actual == SEL_MANDO) {
-
+        // Comprobamos si se ha seleccionado el mando 2
         if (!mando2.isSelecionado) {
             return -1;
         }
@@ -416,12 +404,16 @@ int juegoRebote::iterar(Mat imagen, Circulo mando1, Circulo mando2) {
     }
 
     if (estado_actual == JUGANDO) {
+        // Dibujamos los elementos del juego
+        // y realizamos los calculos oportunos
         dibujarBordes(imagen);
         dibujarBalon(imagen);
         dibujarMarcador(imagen);
         moverBola();
         calcularColisionesBordes(imagen);
 
+        // Comprobamos si cada uno de los mandos se encuentra en su mitad del campo
+        // en cuyo caso comprobamos si hay colision con el balón
         if (mando1.centro.x < imagen.cols / 2) {
             calcularColisionesMando(mando1);
         }
@@ -430,10 +422,13 @@ int juegoRebote::iterar(Mat imagen, Circulo mando1, Circulo mando2) {
             calcularColisionesMando(mando2);
         }
     } else if (estado_actual == CELEBRACION) {
+        // Tras un gol mostramos los mensajes correspondientes
         mostarCelebracion(imagen);
     }
 
     if (estado_actual == FIN) {
+        // Mostramos el mensaje indicando el jugador que ha ganado y
+        // el botón para volver al menu inicial de la aplicacion
         char msg[100];
         sprintf(msg, "El jugador %d ha ganado", ganador);
         putText(imagen, msg, Point(imagen.cols / 2 - 170, imagen.rows / 2 - 10), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 255, 0), 2, FILLED);
@@ -441,6 +436,7 @@ int juegoRebote::iterar(Mat imagen, Circulo mando1, Circulo mando2) {
         mostrarBotonSalir(imagen);
         cargarSeleccion(mando1, rect_salir);
 
+        // Si se ha cargado volver al menu reiniciamos los valores del juego
         if (isCargado) {
             inicializar(imagen);
             isCargado = false;

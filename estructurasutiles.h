@@ -20,13 +20,6 @@ namespace  EstructuraUtiles {
         int radio;
         bool isSelecionado;
     };
-
-    struct Test {
-        Point_<float> centro;
-        Point_<float> velocidad;
-        int radio;
-        bool isSelecionado;
-    };
 }
 
 #endif // ESTRUCTURASUTILES_H
