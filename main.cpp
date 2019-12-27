@@ -103,9 +103,9 @@ static void onMouse( int event, int x, int y, int, void* )
 	}
 }
 void mostrarPantallaJuego() {
-    destroyWindow("Configuracion mando");
-
     namedWindow( "Juego", WINDOW_AUTOSIZE | WINDOW_KEEPRATIO | WINDOW_GUI_NORMAL);
+
+    destroyWindow("Configuracion mando");
     imshow("Juego", image);
 
     isJuegoAbierto = true;

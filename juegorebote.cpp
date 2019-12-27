@@ -1,5 +1,6 @@
 #include "juegorebote.h"
 #include <unistd.h>
+#include <QImage>
 
 juegoRebote::juegoRebote()
 {
@@ -346,16 +347,34 @@ void juegoRebote::mostarCelebracion(Mat imagen) {
 }
 
 void juegoRebote::inicializarImagenes() {
-    info = imread("..\\EyePlay_master\\resources\\info_juego2.png");
 
-    balon = imread("..\\EyePlay_master\\resources\\balon.png");
-    mask_balon = imread("..\\EyePlay_master\\resources\\mask_balon.png");
+    QImage info_q = QImage(":/imagenes/resources/info_juego2.png");
+    info = Mat(info_q.height(), info_q.width(), CV_8UC4, info_q.scanLine(0));
+    cvtColor(info, info, COLOR_RGBA2RGB);
 
-    celebracion = imread("..\\EyePlay_master\\resources\\celebracion.png");
-    mask_celebracion = imread("..\\EyePlay_master\\resources\\mask_celebracion.png");
+    QImage balon_q = QImage(":/imagenes/resources/balon.png");
+    balon = Mat(balon_q.height(), balon_q.width(), CV_8UC4, balon_q.scanLine(0));
+    cvtColor(balon, balon, COLOR_RGBA2RGB);
 
-    boton_empezar = imread("..\\EyePlay_master\\resources\\boton_empezar.png");
-    boton_salir = imread("..\\EyePlay_master\\resources\\boton_volver.png");
+    QImage mask_balon_q = QImage(":/imagenes/resources/mask_balon.png");
+    mask_balon = Mat(mask_balon_q.height(), mask_balon_q.width(), CV_8UC4, mask_balon_q.scanLine(0));
+    cvtColor(mask_balon, mask_balon, COLOR_RGBA2RGB);
+
+    QImage celebracion_q = QImage(":/imagenes/resources/celebracion.png");
+    celebracion = Mat(celebracion_q.height(), celebracion_q.width(), CV_8UC4, celebracion_q.scanLine(0));
+    cvtColor(celebracion, celebracion, COLOR_RGBA2RGB);
+
+    QImage mask_celebracion_q = QImage(":/imagenes/resources/mask_celebracion.png");
+    mask_celebracion = Mat(mask_celebracion_q.height(), mask_celebracion_q.width(), CV_8UC4, mask_celebracion_q.scanLine(0));
+    cvtColor(mask_celebracion, mask_celebracion, COLOR_RGBA2RGB);
+
+    QImage boton_empezar_q = QImage(":/imagenes/resources/boton_empezar.png");
+    boton_empezar = Mat(boton_empezar_q.height(), boton_empezar_q.width(), CV_8UC4, boton_empezar_q.scanLine(0));
+    cvtColor(boton_empezar, boton_empezar, COLOR_RGBA2RGB);
+
+    QImage boton_salor_q = QImage(":/imagenes/resources/boton_volver.png");
+    boton_salir = Mat(boton_salor_q.height(), boton_salor_q.width(), CV_8UC4, boton_salor_q.scanLine(0));
+    cvtColor(boton_salir, boton_salir, COLOR_RGBA2RGB);
 }
 
 void juegoRebote::mostrarBotonSalir(Mat imagen) {

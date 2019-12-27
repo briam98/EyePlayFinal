@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/imagenes">
+        <file>resources/balon.png</file>
+        <file>resources/boton_empezar.png</file>
+        <file>resources/boton_volver.png</file>
+        <file>resources/celebracion.png</file>
+        <file>resources/info_juego1.png</file>
+        <file>resources/info_juego2.png</file>
+        <file>resources/m_juego1.png</file>
+        <file>resources/m_juego2.png</file>
+        <file>resources/m_mando.png</file>
+        <file>resources/m_salir.png</file>
+        <file>resources/mask_balon.png</file>
+        <file>resources/mask_celebracion.png</file>
+        <file>resources/nota0.png</file>
+        <file>resources/nota0_azul.png</file>
+        <file>resources/nota0_oro.png</file>
+        <file>resources/nota0_rojo.png</file>
+        <file>resources/nota0_verde.png</file>
+        <file>resources/nota1.png</file>
+        <file>resources/nota1_azul.png</file>
+        <file>resources/nota1_oro.png</file>
+        <file>resources/nota1_rojo.png</file>
+        <file>resources/nota1_verde.png</file>
+        <file>resources/nota2.png</file>
+        <file>resources/nota2_azul.png</file>
+        <file>resources/nota2_oro.png</file>
+        <file>resources/nota2_rojo.png</file>
+        <file>resources/nota2_verde.png</file>
+        <file>resources/nota3.png</file>
+        <file>resources/nota3_azul.png</file>
+        <file>resources/nota3_oro.png</file>
+        <file>resources/nota3_rojo.png</file>
+        <file>resources/nota3_verde.png</file>
+        <file>resources/tambor1.png</file>
+    </qresource>
+</RCC>

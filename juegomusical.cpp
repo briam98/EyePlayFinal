@@ -1,4 +1,5 @@
 #include "juegomusical.h"
+#include <QImage>
 JuegoMusical::JuegoMusical()
 {
 
@@ -369,37 +370,69 @@ int JuegoMusical::iterar(Mat image, Circulo mando, int frame) {
 
 void JuegoMusical::inicializarImagenes() {
 
-    info = imread("..\\EyePlay_master\\resources\\info_juego1.png");
-    boton_empezar = imread("..\\EyePlay_master\\resources\\boton_empezar.png");
-    boton_volver = imread("..\\EyePlay_master\\resources\\boton_volver.png");
-    tambor = imread("..\\EyePlay_master\\resources\\tambor1.png");
+    QImage aux = QImage(":/imagenes/resources/info_juego1.png");
+    info = Mat(aux.height(), aux.width(), CV_8UC4, aux.scanLine(0));
+    cvtColor(info, info, COLOR_RGBA2RGB);
 
-    notas[0][0] = imread("..\\EyePlay_master\\resources\\nota0.png");
-    notas[0][1] = imread("..\\EyePlay_master\\resources\\nota0_rojo.png");
-    notas[0][2] = imread("..\\EyePlay_master\\resources\\nota0_verde.png");
-    notas[0][3] = imread("..\\EyePlay_master\\resources\\nota0_azul.png");
-    notas[0][4] = imread("..\\EyePlay_master\\resources\\nota0_oro.png");
+    QImage aux1 = QImage(":/imagenes/resources/boton_empezar.png");
+    boton_empezar = Mat(aux1.height(), aux1.width(), CV_8UC4, aux1.scanLine(0));
+    cvtColor(boton_empezar, boton_empezar, COLOR_RGBA2RGB);
 
-    notas[1][0] = imread("..\\EyePlay_master\\resources\\nota1.png");
-    notas[1][1] = imread("..\\EyePlay_master\\resources\\nota1_rojo.png");
-    notas[1][2] = imread("..\\EyePlay_master\\resources\\nota1_verde.png");
-    notas[1][3] = imread("..\\EyePlay_master\\resources\\nota1_azul.png");
-    notas[1][4] = imread("..\\EyePlay_master\\resources\\nota1_oro.png");
+    QImage aux2 = QImage(":/imagenes/resources/boton_volver.png");
+    boton_volver = Mat(aux2.height(), aux2.width(), CV_8UC4, aux2.scanLine(0));
+    cvtColor(boton_volver, boton_volver, COLOR_RGBA2RGB);
 
-    notas[2][0] = imread("..\\EyePlay_master\\resources\\nota2.png");
-    notas[2][1] = imread("..\\EyePlay_master\\resources\\nota2_rojo.png");
-    notas[2][2] = imread("..\\EyePlay_master\\resources\\nota2_verde.png");
-    notas[2][3] = imread("..\\EyePlay_master\\resources\\nota2_azul.png");
-    notas[2][4] = imread("..\\EyePlay_master\\resources\\nota2_oro.png");
+    QImage aux3 = QImage(":/imagenes/resources/tambor1.png");
+    tambor = Mat(aux3.height(), aux3.width(), CV_8UC4, aux3.scanLine(0));
+    cvtColor(tambor, tambor, COLOR_RGBA2RGB);
 
-    notas[3][0] = imread("..\\EyePlay_master\\resources\\nota3.png");
-    notas[3][1] = imread("..\\EyePlay_master\\resources\\nota3_rojo.png");
-    notas[3][2] = imread("..\\EyePlay_master\\resources\\nota3_verde.png");
-    notas[3][3] = imread("..\\EyePlay_master\\resources\\nota3_azul.png");
-    notas[3][4] = imread("..\\EyePlay_master\\resources\\nota3_oro.png");
+    QImage aux00 = QImage(":/imagenes/resources/nota0.png");
+    notas[0][0] = Mat(aux00.height(), aux00.width(), CV_8UC4, aux00.scanLine(0));
+    QImage aux01 = QImage(":/imagenes/resources/nota0_rojo.png");
+    notas[0][1] = Mat(aux01.height(), aux01.width(), CV_8UC4, aux01.scanLine(0));
+    QImage aux02 = QImage(":/imagenes/resources/nota0_verde.png");
+    notas[0][2] = Mat(aux02.height(), aux02.width(), CV_8UC4, aux02.scanLine(0));
+    QImage aux03 = QImage(":/imagenes/resources/nota0_azul.png");
+    notas[0][3] = Mat(aux03.height(), aux03.width(), CV_8UC4, aux03.scanLine(0));
+    QImage aux04 = QImage(":/imagenes/resources/nota0_oro.png");
+    notas[0][4] = Mat(aux04.height(), aux04.width(), CV_8UC4, aux04.scanLine(0));
+
+    QImage aux10 = QImage(":/imagenes/resources/nota1.png");
+    notas[1][0] = Mat(aux10.height(), aux10.width(), CV_8UC4, aux10.scanLine(0));
+    QImage aux11 = QImage(":/imagenes/resources/nota1_rojo.png");
+    notas[1][1] = Mat(aux11.height(), aux11.width(), CV_8UC4, aux11.scanLine(0));
+    QImage aux12 = QImage(":/imagenes/resources/nota1_verde.png");
+    notas[1][2] = Mat(aux12.height(), aux12.width(), CV_8UC4, aux12.scanLine(0));
+    QImage aux13 = QImage(":/imagenes/resources/nota1_azul.png");
+    notas[1][3] = Mat(aux13.height(), aux13.width(), CV_8UC4, aux13.scanLine(0));
+    QImage aux14 = QImage(":/imagenes/resources/nota1_oro.png");
+    notas[1][4] = Mat(aux14.height(), aux14.width(), CV_8UC4, aux14.scanLine(0));
+
+    QImage aux20 = QImage(":/imagenes/resources/nota2.png");
+    notas[2][0] = Mat(aux20.height(), aux20.width(), CV_8UC4, aux20.scanLine(0));
+    QImage aux21 = QImage(":/imagenes/resources/nota2_rojo.png");
+    notas[2][1] = Mat(aux21.height(), aux21.width(), CV_8UC4, aux21.scanLine(0));
+    QImage aux22 = QImage(":/imagenes/resources/nota2_verde.png");
+    notas[2][2] = Mat(aux22.height(), aux22.width(), CV_8UC4, aux22.scanLine(0));
+    QImage aux23 = QImage(":/imagenes/resources/nota2_azul.png");
+    notas[2][3] = Mat(aux23.height(), aux23.width(), CV_8UC4, aux23.scanLine(0));
+    QImage aux24 = QImage(":/imagenes/resources/nota2_oro.png");
+    notas[2][4] = Mat(aux24.height(), aux24.width(), CV_8UC4, aux24.scanLine(0));
+
+    QImage aux30 = QImage(":/imagenes/resources/nota3.png");
+    notas[3][0] = Mat(aux30.height(), aux30.width(), CV_8UC4, aux30.scanLine(0));
+    QImage aux31 = QImage(":/imagenes/resources/nota3_rojo.png");
+    notas[3][1] = Mat(aux31.height(), aux31.width(), CV_8UC4, aux31.scanLine(0));
+    QImage aux32 = QImage(":/imagenes/resources/nota3_verde.png");
+    notas[3][2] = Mat(aux32.height(), aux32.width(), CV_8UC4, aux32.scanLine(0));
+    QImage aux33 = QImage(":/imagenes/resources/nota3_azul.png");
+    notas[3][3] = Mat(aux33.height(), aux33.width(), CV_8UC4, aux33.scanLine(0));
+    QImage aux34 = QImage(":/imagenes/resources/nota3_oro.png");
+    notas[3][4] = Mat(aux34.height(), aux34.width(), CV_8UC4, aux34.scanLine(0));
 
     for (int i = 0; i < 4; i++) {
         for (int j = 0 ; j < 5; j++) {
+            cvtColor(notas[i][j], notas[i][j], COLOR_RGBA2RGB);
             cvtColor(notas[i][j], mask_notas[i][j], COLOR_BGR2GRAY);
             threshold(mask_notas[i][j], mask_notas[i][j], 0, 255, THRESH_BINARY_INV + THRESH_OTSU);
         }

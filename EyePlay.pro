@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -49,3 +49,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 INCLUDEPATH += "C:\OpenCV\OpenCV4.1.1G\include"
 LIBS += -L"C:\OpenCV\OpenCV4.1.1G\lib"\
  -llibopencv_world411
+
+RESOURCES += \
+    resources.qrc

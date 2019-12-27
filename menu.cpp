@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <QImage>
 
 Menu::Menu()
 {
@@ -17,10 +18,23 @@ static int itemCargado = -1;
 static Mat m_juego1, m_juego2, m_mando, m_salir;
 
 void Menu::inicializarImagenes() {
-    m_juego1 = imread("..\\EyePlay_master\\resources\\m_juego1.png");
-    m_juego2 = imread("..\\EyePlay_master\\resources\\m_juego2.png");
-    m_mando = imread("..\\EyePlay_master\\resources\\m_mando.png");
-    m_salir = imread("..\\EyePlay_master\\resources\\m_salir.png");
+
+    QImage m_juego1_q = QImage(":/imagenes/resources/m_juego1.png");
+    m_juego1 = Mat(m_juego1_q.height(), m_juego1_q.width(), CV_8UC4, m_juego1_q.scanLine(0));
+    cvtColor(m_juego1, m_juego1, COLOR_RGBA2RGB);
+
+    QImage m_juego2_q = QImage(":/imagenes/resources/m_juego2.png");
+    m_juego2 = Mat(m_juego2_q.height(), m_juego2_q.width(), CV_8UC4, m_juego2_q.scanLine(0));
+    cvtColor(m_juego2, m_juego2, COLOR_RGBA2RGB);
+
+    QImage m_mando_q = QImage(":/imagenes/resources/m_mando.png");
+    m_mando = Mat(m_mando_q.height(), m_mando_q.width(), CV_8UC4, m_mando_q.scanLine(0));
+    cvtColor(m_mando, m_mando, COLOR_RGBA2RGB);
+
+    QImage m_salir_q = QImage(":/imagenes/resources/m_salir.png");
+    m_salir = Mat(m_salir_q.height(), m_salir_q.width(), CV_8UC4, m_salir_q.scanLine(0));
+    cvtColor(m_salir, m_salir, COLOR_RGBA2RGB);
+
 }
 
 void Menu::dibujarMenu(Mat imagen) {
